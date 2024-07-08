@@ -29,11 +29,15 @@ void GT911Touchscreen::setup() {
 
   // check the configuration of the int line.
   uint8_t data[4];
+  ESP_LOGCONFIG(TAG, "Writing switches");
   err = this->write(GET_SWITCHES, 2);
+  ESP_LOGCONFIG(TAG, "Write err: %i", (int)err);
   if (err == i2c::ERROR_OK) {
+    ESP_LOGCONFIG(TAG, "Writing switches ok");
     err = this->read(data, 1);
+    ESP_LOGCONFIG(TAG, "Read err: %i", (int)err);
     if (err == i2c::ERROR_OK) {
-      ESP_LOGD(TAG, "Read from switches: 0x%02X", data[0]);
+      ESP_LOGCONFIG(TAG, "Read from switches: 0x%02X", data[0]);
       if (this->interrupt_pin_ != nullptr) {
         // datasheet says NOT to use pullup/down on the int line.
         this->interrupt_pin_->pin_mode(gpio::FLAG_INPUT);
@@ -44,9 +48,13 @@ void GT911Touchscreen::setup() {
     }
   }
   if (err == i2c::ERROR_OK) {
+    ESP_LOGCONFIG(TAG, "Writing max values");
     err = this->write(GET_MAX_VALUES, 2);
+    ESP_LOGCONFIG(TAG, "Write err: %i", (int)err);
     if (err == i2c::ERROR_OK) {
+      ESP_LOGCONFIG(TAG, "Writing max values ok");
       err = this->read(data, sizeof(data));
+      ESP_LOGCONFIG(TAG, "Read err: %i", (int)err);
       if (err == i2c::ERROR_OK) {
         if (this->x_raw_max_ == this->x_raw_min_) {
           this->x_raw_max_ = encode_uint16(data[1], data[0]);
