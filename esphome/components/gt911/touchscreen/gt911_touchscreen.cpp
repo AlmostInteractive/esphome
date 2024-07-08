@@ -25,7 +25,7 @@ static const size_t MAX_BUTTONS = 4;  // max number of buttons scanned
 
 void GT911Touchscreen::setup() {
   i2c::ErrorCode err;
-  ESP_LOGCONFIG(TAG, "Setting up GT911 Touchscreen...");
+  ESP_LOGCONFIG(TAG, "Setting up GT911 Touchscreen....");
 
   // check the configuration of the int line.
   uint8_t data[4];
@@ -115,7 +115,7 @@ void GT911Touchscreen::update_touches() {
 }
 
 void GT911Touchscreen::dump_config() {
-  ESP_LOGCONFIG(TAG, "GT911 Touchscreen:");
+  ESP_LOGCONFIG(TAG, "GT911 Touchscreen::");
   LOG_I2C_DEVICE(this);
   LOG_PIN("  Interrupt Pin: ", this->interrupt_pin_);
 }
